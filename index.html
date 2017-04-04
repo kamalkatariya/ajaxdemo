@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="boot/css/bootstrap.min.css"/>
+        <script src="boot/js/bootstrap.min.js"></script>
+        <link href="boot/css/styles.css" rel="stylesheet"/>
+        <script>
+            window.onload=function(){
+                 var xhttp = new XMLHttpRequest();
+                  xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("demo").innerHTML = this.responseText;
+                    }
+                  }
+                  xhttp.open("GET", "selector1.php", true);
+                  xhttp.send();
+            }
+            function ajaxFunction(){
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("demo").innerHTML = this.responseText;
+                    }
+                  }
+                   var name = document.getElementById('name').value;
+                   var fname= document.getElementById('fname').value;
+                   var gen= document.getElementById('gen').value;
+                   var salex= document.getElementById('salery').value;
+                
+                   var queryString = "?name="+name+"&fname="+fname+"&gen="+gen+"&salary="+salex;
+                  xhttp.open("GET", "ajax.php"+queryString, true);
+                  xhttp.send();
+                } 
+                    function del(x)
+        {
+            var xhttp = new XMLHttpRequest();
+                  xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("demo").innerHTML = this.responseText;
+                    }
+                  }
+                  var id=x
+                  xhttp.open("GET", "del.php?id=" + id, true);
+                  xhttp.send();
+        }
+             function edit(x)
+            {
+             var xhttp = new XMLHttpRequest();
+                  xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    var myobj=JSON.parse(this.responseText);
+                    var person = prompt("Please enter your name",myobj.name);
+                    var person_father = prompt("Please enter your fathername",myobj.fname); 
+                    var person_gender = prompt("Please enter your gender",myobj.gen); 
+                    var person_salary = prompt("Please enter your Salary",myobj.salary);
+                    var id=myobj.id;
+                    if(person!="" && person_father!="" && person_gender!="" && person_salary!="" &&person!=null && person_father!=null && person_gender!=null && person_salary!=null){
+                        
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+//                            alert(this.responseText);
+                            document.getElementById("demo").innerHTML = this.responseText;
+                        }
+                        }
+                  xhttp.open("GET", "update.php?id="+id+"&&name="+person+
+                             "&&father="+person_father+"&&salary="+person_salary+"&&gender="+person_gender, true);
+                  xhttp.send();
+               
+                
+                
+                    }
+                    else{
+                        alert('not ok');
+                    }
+                    
+                        
+                        
+                        
+                    }
+                  }
+                  xhttp.open("GET", "selector.php?id=" + x, true);
+                  xhttp.send();
+            
+        }
+        </script>
+    </head>
+    <body>
+        
+        <div class="container">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 maindiv ">
+        <div class="well">
+            <h3 class="page-header text-center text-danger">Welcome To Ajax Tutorial</h3>
+            <h3 class="text-center text-danger">Add Employee</h3>
+
+            <div class="form-group">
+            <input type='text' id='name' placeholder="Name" class="form-control"/>
+
+            </div>
+            <div class="form-group">
+            <input type='text' id='fname' placeholder="Father Name" class="form-control"/>
+
+            </div>
+             <div class="form-group">
+            <input type='text' id='salery' placeholder="Salary" class="form-control"/>
+
+            </div>
+            <div class="form-group">
+            <select id='gen'  class="form-control">
+                <option value="m">M</option>
+                <option value="f">F</option>
+            </select>
+
+            </div>            
+            <input type='button' class='btn btn-md btn-success' value="Insert" onclick='ajaxFunction()'>
+        </div>
+        <div class="well">
+        <h3 class="page-header text-center text-info">All Employees</h3>
+
+        <div id="demo"></div>
+            </div>
+        
+        </div>
+        <div class="col-sm-2"></div>
+        </div>
+        
+    </body>    
+</html>
